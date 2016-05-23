@@ -1,13 +1,14 @@
 package com.zombie.show.controller;
 
+import com.zombie.proto.test.BaseProto;
+import com.zombie.proto.test.RegisterProto;
 import com.zombie.show.bean.BaseResponse;
 import com.zombie.show.bean.Greeting;
 import com.zombie.show.bean.RegisterRequest;
 import com.zombie.show.bean.RegisterResponse;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -47,5 +48,17 @@ public class GreetingController {
         baseResponse.setErrMsg("OK");
         baseResponse.setErrCode(0);
         return registerResponse;
+    }
+
+    @RequestMapping(value = "/reg/proto", method = RequestMethod.POST)
+    public ResponseEntity<RegisterProto.RegisterResponse> reg(RequestEntity<RegisterProto.RegisterRequest> request) {
+        RegisterProto.RegisterResponse.Builder builder = RegisterProto.RegisterResponse.newBuilder();
+        builder.setNick(request.getBody().getNick())
+                .setPhoneNumber(request.getBody().getPhoneNumber());
+        BaseProto.BaseResponse.Builder responseBuilder = BaseProto.BaseResponse.newBuilder();
+        responseBuilder.setErrorCode(0)
+                .setErrorMsg("OK");
+        builder.setBaseResponse(responseBuilder.build());
+        return ResponseEntity.ok(builder.build());
     }
 }

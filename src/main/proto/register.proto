@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+import "base.proto";
+
+option java_package = "com.zombie.proto.test";
+
+option java_outer_classname = "RegisterProto";
+
+message RegisterRequest {
+    required string phoneNumber = 1;
+    optional string nick = 2;
+}
+
+message RegisterResponse {
+    required BaseResponse baseResponse = 1;
+    optional string phoneNumber = 2;
+    optional string nick = 3;
+}

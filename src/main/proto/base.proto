@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+option java_package = "com.zombie.proto.test";
+
+option java_outer_classname = "BaseProto";
+
+message BaseResponse {
+    required int32 errorCode = 1;
+    required string errorMsg = 2;
+}
